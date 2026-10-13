@@ -1,0 +1,16 @@
+{
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python.defaultInterpreterPath": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3.13",
+    "python-envs.pythonProjects": [],
+    "python.languageServer": "Pylance",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingModuleSource": "none",
+        "reportShadowedImports": "none"
+    },
+    "python.analysis.extraPaths": [
+        "",
+        "/Users/franciscopontepimentel/.vscode/extensions/joedevivo.vscode-circuitpython-0.2.0-darwin-arm64/stubs",
+        "/Users/franciscopontepimentel/Library/Application Support/Code/User/globalStorage/joedevivo.vscode-circuitpython/bundle/20261010/adafruit-circuitpython-bundle-py-20261010/lib"
+    ],
+    "circuitpython.board.version": null
+}
