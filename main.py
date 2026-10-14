@@ -4,5 +4,4 @@ from manim import *
 class Chemistry_Animator(Scene):
 
     def construct(self):
-        self.play(Write(self.equation))
-        self.wait(2)
+        ...
