@@ -1,6 +1,7 @@
 from main import *
 from collections import Counter
 import re
+import pandas
 
 class Equation_Parser:
     def divide_equation(self, equation):
@@ -25,7 +26,7 @@ class Equation_Parser:
     def count_elements(self, reagents_no_plus, products_no_plus):
         
         # =============== REAGENTS ===============
-        total_reagents = Counter()
+        self.total_reagents = Counter()
 
         for item in self.reagents_no_plus:
             # Split the coef of the formula
@@ -56,10 +57,10 @@ class Equation_Parser:
                     # Ex: 4H2O
                     #     >> Coef: 4
                     #     >> quantity: 2
-                    total_reagents[element] += coefficient * quantity
+                    self.total_reagents[element] += coefficient * quantity
 
         # =============== PRODUCTS ===============
-        total_products = Counter()
+        self.total_products = Counter()
 
         for item in self.products_no_plus:
  
@@ -81,10 +82,15 @@ class Equation_Parser:
                     else:
                         quantity = 1
 
-                    total_products[element] += coefficient * quantity
+                    self.total_products[element] += coefficient * quantity
 
-        for element, total in total_reagents.items():
+        for element, total in self.total_reagents.items():
             print(f"{element}: {total}")
 
-        for element, total in total_products.items():
+        for element, total in self.total_products.items():
             print(f"{element}: {total}")
+    
+
+    def table(self, total_reagents):
+        elements_table = pandas.DataFrame(self.total_reagents)
+        print(elements_table)
