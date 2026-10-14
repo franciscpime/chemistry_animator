@@ -23,71 +23,68 @@ class Equation_Parser:
         print(self.products_no_plus)
 
     def count_elements(self, reagents_no_plus, products_no_plus):
-
-        # self.reagents_quantities = []
-        # self.reagents_elements = []
-        # self.products_quantities = []
-        # self.products_elements = []
-        # for reagent in reagents_no_plus:
-        #     for c in reagent:
-        #         if c.isdigit():
-        #             c = int(c)
-        #             self.reagents_quantities.append(c)
-        #         elif c.isalpha():
-        #             self.reagents_elements.append(c)
-            
-        #     if reagent.isalpha():
-        #         self.reagents_quantities.append(1)
         
-        # for product in products_no_plus:
-        #     for c in product:
-        #         if c.isdigit():
-        #             c = int(c)
-        #             self.products_quantities.append(c)
-        #         elif c.isalpha():
-        #             self.products_elements.append(c)
-            
-        #     if product.isalpha():
-        #         self.products_quantities.append(1)
-
-        # for reagent_element, reagent_quantity in zip(self.reagents_elements, self.reagents_quantities):
-        #     print(f"{reagent_element}: {reagent_quantity}")
-        
-        # for product_element, product_quantity in zip(self.products_elements, self.products_quantities):
-        #     print(f"{product_element}: {product_quantity}")
+        # =============== REAGENTS ===============
         total_reagents = Counter()
 
         for item in self.reagents_no_plus:
-            match = re.match(r"(\d*)([A-Za-z]+)", item)
+            # Split the coef of the formula
+            # Ex: 2H2O 
+            #     >> num_molecule = "2"
+            #     >> formula = "H2O"
+            match = re.match(r"(\d*)(.*)", item)
 
             if match:
-                num_element, element = match.groups()
-
-                if num_element:
-                    quantity = int(num_element)
+                num_molecule, formula = match.groups()
+                
+                if num_molecule:
+                    coefficient = int(num_molecule) # convert "2" to 2
                 else:
-                    quantity = 1
+                    coefficient = 1                 # if there is no number, means it's 1
 
-                total_reagents[element] += quantity
+                # Identify all elements and indices
+                # Ex: H2O
+                #     >> [('H', '2'), ('O', '')]
+                elements = re.findall(r"([A-Z][a-z]?)(\d*)", formula)
 
-        for element, total in total_reagents.items():
-            print(f"{element}: {total}")
+                for element, num_element in elements:
+                    if num_element:
+                        quantity = int(num_element)
+                    else:
+                        quantity = 1
 
-        
+                    # Ex: 4H2O
+                    #     >> Coef: 4
+                    #     >> quantity: 2
+                    total_reagents[element] += coefficient * quantity
+
+        # =============== PRODUCTS ===============
         total_products = Counter()
 
         for item in self.products_no_plus:
-            match = re.match(r"(\d*)([A-Za-z]+)", item)
+ 
+            match = re.match(r"(\d*)(.*)", item)
 
             if match:
-                num_element, element = match.groups()
-
-                if num_element:
-                    quantity = int(num_element)
+                num_molecule, formula = match.groups()
+                
+                if num_molecule:
+                    coefficient = int(num_molecule) 
                 else:
-                    quantity = 1
+                    coefficient = 1           
 
-                total_products[element] += quantity
+                elements = re.findall(r"([A-Z][a-z]?)(\d*)", formula)
+
+                for element, num_element in elements:
+                    if num_element:
+                        quantity = int(num_element)
+                    else:
+                        quantity = 1
+
+                    total_products[element] += coefficient * quantity
+
+        for element, total in total_reagents.items():
+            print(f"{element}: {total}")
 
         for element, total in total_products.items():
             print(f"{element}: {total}")
